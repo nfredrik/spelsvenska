@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 def before_all(context):
     context.browser = webdriver.Firefox()
     context.Keys = Keys
-
+    context.By = By
+    context.NoSuchElementException = NoSuchElementException
 def after_all(context):
     context.browser.quit()

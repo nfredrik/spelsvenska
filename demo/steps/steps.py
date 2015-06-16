@@ -22,6 +22,10 @@ def step_impl(context,text):
 
 @then(u'I, "Fredrik" can login as user')
 def step_impl(context):
+
+    #assert_that(True, equal_to(
+    #    context.helper.is_element_present(context.By.ID, "footer")))
+    #assert context.helper.is_text_present("topNavLogIn")
     context.helper.login()
     assert True
     #raise NotImplementedError(u'STEP: Then I, "Fredrik" can login as user')
@@ -73,21 +77,35 @@ class Helper():
 
         assert_that(False)
 
+    def is_element_present(self, how, what):
+        try: self.context.browser.find_element(by=how, value=what)
+        except self.context.NoSuchElementException as e: return False
+        return True
+
     def login(self):
         #loginUserName
         #svusername
         #svspindcode
-        elem = self.context.browser.find_element_by_id("topNavLogIn")
+        #elem = self.context.browser.find_element_by_id("topNavLogIn")
 
-        elem = self.context.browser.find_element_by_id("svsusername")
-        elem.send_keys('nfredrik')
+        elem = self.context.browser.find_element_by_id("loginUserName")
+        #print(help(elem))
+        print("nisse:{}".format(elem.text))
+        #print(elem.get_attribute())
+        #elem.send_keys('nfredrik')
         #elem.send_keys(self.context.Keys.TAB)        
-        elem = self.context.browser.find_element_by_id("svspincode")
-        elem.send_keys('yyyyyy')
+        elem = self.context.browser.find_element_by_id("loginPassword")
+        #elem.send_keys('yyyyyy')
         #elem.send_keys(self.context.Keys.RETURN)
-        elem = self.context.browser.find_element_by_id("inputLoginButton")
-        elem.click()
+        #elem = self.context.browser.find_element_by_id("inputLoginButton")
+        #elem.click()
 
+    def is_text_present(self, text):
+        try:
+            body = self.context.browser.find_element_by_tag_name("body") # find body tag element
+        except self.context.NoSuchElementException as e:
+            return False
+        return text in body.text # check if the text is in body's text
 
     def old_login(self):
         username = "nfredrik"
