@@ -83,6 +83,54 @@ class Helper():
         return True
 
     def login(self):
+        driver = self.context.browser
+        wait10 = self.context.WebDriverWait(driver, 10)
+
+        driver.get('https://svenskaspel.se/?pageid=/login')
+        uid = driver.find_element_by_name("txtUsername")
+        passwd = driver.find_element_by_id("txtPassword")
+        login_button = driver.find_element_by_xpath(".//*[@id='loginForm']/input")
+        uid.clear()
+        uid.send_keys('nfredrik')
+        passwd.clear()
+        passwd.send_keys('yyyyyyy')
+        login_button.click()
+
+        balance = wait10.until(lambda driver: driver.find_element_by_xpath(".//*[@id='nameDisplay']"))
+        print("balance:{}".format(balance.text))
+        assert_that(balance.text, is_not(contains_string("FREDRIK")))
+
+
+    def xpath_login(self):
+        driver = self.context.browser
+        wait10 = self.context.WebDriverWait(driver, 10)
+
+        username = "nfredrik"
+        passwd = "yyyyyyy"
+        username_field="svsusername"
+        passwd_field = "svspincode"
+        loginButtonXpath = "//input[@id='inputLoginButton']"
+
+        username_elem = wait10.until(lambda driver: driver.find_element_by_id(username_field))
+        passwd_elem = wait10.until(lambda driver: driver.find_element_by_id(passwd_field)) 
+        login_button =  wait10.until(lambda driver: driver.find_element_by_xpath(loginButtonXpath))
+
+        form = driver.find_element_by_id("topNavLogIn")
+        print("form:{} {}".format(form.is_displayed(), form.is_selected()))
+        hov = self.context.ActionChains(driver).move_to_element(form)
+        hov.perform()
+
+        
+        username_elem.clear()
+        username_elem.send_keys(username)
+        passwd_elem.clear()
+        passwd_elem.send_keys(passwd)
+        login_button.click()       
+
+
+
+        # balance display balanceDisplay
+    def Old_login(self):
         #loginUserName
         #svusername
         #svspindcode
@@ -117,7 +165,7 @@ class Helper():
 
     def old_login(self):
         username = "nfredrik"
-        password = "minMagear4stor"
+        password = "yyyyyyy"
 
         xpaths = { 'usernameTxtBox' : "//input[@name='username']",
                    'passwordTxtBox' : "//input[@name='password']",
