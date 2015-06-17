@@ -86,15 +86,23 @@ class Helper():
         #loginUserName
         #svusername
         #svspindcode
-        #elem = self.context.browser.find_element_by_id("topNavLogIn")
-
-        elem = self.context.browser.find_element_by_id("loginUserName")
-        #print(help(elem))
-        print("nisse:{}".format(elem.text))
+        elem = self.context.browser.find_element_by_id('LoginView')
+        self.context.browser.implicitly_wait(2) # seconds
+        username = self.context.browser.find_element_by_name('svsusername')
+        #username = topnav.find_element_by_id('svsusername')
+        self.context.browser.implicitly_wait(2) # seconds
+        username.send_keys('nfredrik' + self.context.Keys.TAB)
+        #elem.send_keys_to_element(username, 'nfredrik' + self.context.Keys.TAB)
+        print("Testing this:{}".format(username.tag_name))
+        print("Is selected:{}".format(username.is_selected()))
+        #print("nisse:{}".format(elem.text))
         #print(elem.get_attribute())
         #elem.send_keys('nfredrik')
         #elem.send_keys(self.context.Keys.TAB)        
-        elem = self.context.browser.find_element_by_id("loginPassword")
+        elem2 = self.context.browser.find_element_by_id("loginPassword")
+
+        #assert_that(elem1, equal_to(elem2))
+
         #elem.send_keys('yyyyyy')
         #elem.send_keys(self.context.Keys.RETURN)
         #elem = self.context.browser.find_element_by_id("inputLoginButton")
